@@ -645,8 +645,12 @@ static void MakeQFont(obs_data_t *font_obj, QFont &font)
 		font.setStyleName(style);
 	}
 
-	if (size)
+	if (size) {
+		int max_size = font.pointSize();
+		if (max_size < 28) max_size = 28;
+		if (size > max_size) size = max_size;
 		font.setPointSize(size);
+	}
 
 	if (flags & OBS_FONT_BOLD) font.setBold(true);
 	if (flags & OBS_FONT_ITALIC) font.setItalic(true);
